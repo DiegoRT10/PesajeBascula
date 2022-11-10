@@ -85,22 +85,27 @@ public class Pesaje extends javax.swing.JFrame implements Runnable{
         txtaPesos.append(peso.toString()+System.getProperty("line.separator"));
         System.out.println("Peso: "+peso);
        
-        if(peso==pesoOld){
+        if(pesoOld.equals(peso)){
              contador++;
-         }else{contador--;}
+             System.out.println("contador mas"+contador);
+         }else{contador=0;
+        System.out.println("contador menos"+contador);}
          
          if(contador==10){
              lblPesoTotal.setText(peso.toString());
+             MostrarLabels(false);
+             lblDescripcion2.setVisible(true);
+        lblPesoTotal.setVisible(true);
          }
          pesoOld=peso;
         
         
-        peso=0.0;
+//        peso=0.0;
         //salida.println("Dato capturado");
         
     }
      
-     private void MostrarLabels(Boolean visible){
+     public static void MostrarLabels(Boolean visible){
         lblCarga.setVisible(visible);
         lblCalculando.setVisible(visible);
         lblDescripcion1.setVisible(visible);
@@ -167,7 +172,7 @@ public class Pesaje extends javax.swing.JFrame implements Runnable{
         lblDescripcion1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lblDescripcion1.setText("El Peso es de: ");
 
-        lblPesoTotal.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblPesoTotal.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
         lblPesoTotal.setForeground(new java.awt.Color(255, 51, 51));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -175,29 +180,24 @@ public class Pesaje extends javax.swing.JFrame implements Runnable{
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblDescripcion2)
-                        .addGap(58, 58, 58)
-                        .addComponent(lblPesoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(109, 109, 109)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(150, 150, 150)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblDescripcion2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblPesoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(358, 358, 358)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblCarga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(23, 23, 23))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnEmpezar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCalculando, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(lblCarga)
+                    .addComponent(btnEmpezar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCalculando, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(220, 220, 220)
@@ -218,9 +218,11 @@ public class Pesaje extends javax.swing.JFrame implements Runnable{
                         .addGap(18, 18, 18)
                         .addComponent(lblCalculando, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(65, 65, 65)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPesoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(229, 229, 229)
+                                .addComponent(lblPesoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(lblDescripcion2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,15 +299,15 @@ public class Pesaje extends javax.swing.JFrame implements Runnable{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEmpezar;
+    public static javax.swing.JButton btnEmpezar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblCalculando;
-    private javax.swing.JLabel lblCarga;
-    private javax.swing.JLabel lblDescripcion1;
-    private javax.swing.JLabel lblDescripcion2;
+    public static javax.swing.JScrollPane jScrollPane1;
+    public static javax.swing.JLabel lblCalculando;
+    public static javax.swing.JLabel lblCarga;
+    public static javax.swing.JLabel lblDescripcion1;
+    public static javax.swing.JLabel lblDescripcion2;
     public static javax.swing.JLabel lblPesoTotal;
-    private javax.swing.JTextArea txtaPesos;
+    public static javax.swing.JTextArea txtaPesos;
     // End of variables declaration//GEN-END:variables
 }
