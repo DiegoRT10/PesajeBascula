@@ -23,18 +23,24 @@ public class Pesaje extends javax.swing.JFrame implements Runnable{
     /**
      * Creates new form Pesaje
      */
- public static Double peso;
- int contadorHilos = 0;
+ public static Double peso = 0.0;
+ public static Double pesoOld=0.0;
+ public static Integer contador = 0;
+ public static int contadorHilos = 0;
  CommPortIdentifier cpi = null;
     SerialPort puertoSerial = null;
     Scanner entrada = null;
     PrintStream salida = null;
     Enumeration comports = CommPortIdentifier.getPortIdentifiers();
+    Boolean bandera=false;
  
     public Pesaje() {
         initComponents();
+         this.setLocationRelativeTo(null);
+        //this.setExtendedState(MAXIMIZED_BOTH);
         Thread hilo = new Thread(this);
         hilo.start();
+        MostrarLabels(false);
         
     }
 
@@ -76,11 +82,36 @@ public class Pesaje extends javax.swing.JFrame implements Runnable{
         
         }
         peso = entrada.nextDouble();
+        txtaPesos.append(peso.toString()+System.getProperty("line.separator"));
         System.out.println("Peso: "+peso);
+       
+        if(peso==pesoOld){
+             contador++;
+         }else{contador--;}
+         
+         if(contador==10){
+             lblPesoTotal.setText(peso.toString());
+         }
+         pesoOld=peso;
+        
+        
         peso=0.0;
         //salida.println("Dato capturado");
         
     }
+     
+     private void MostrarLabels(Boolean visible){
+        lblCarga.setVisible(visible);
+        lblCalculando.setVisible(visible);
+        lblDescripcion1.setVisible(visible);
+        lblDescripcion2.setVisible(visible);
+        lblPesoTotal.setVisible(visible);
+        jScrollPane1.setVisible(visible);
+        txtaPesos.setVisible(visible);
+     }
+     
+     
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,21 +121,136 @@ public class Pesaje extends javax.swing.JFrame implements Runnable{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        lblCarga = new javax.swing.JLabel();
+        lblCalculando = new javax.swing.JLabel();
+        lblDescripcion2 = new javax.swing.JLabel();
+        btnEmpezar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtaPesos = new javax.swing.JTextArea();
+        lblDescripcion1 = new javax.swing.JLabel();
+        lblPesoTotal = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 153, 102));
+
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel1.setText("Pesaje de Sacos de Cafe Olopa");
+
+        lblCarga.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cargando.gif"))); // NOI18N
+
+        lblCalculando.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblCalculando.setText("Calculando");
+
+        lblDescripcion2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblDescripcion2.setText("El peso final es de:");
+
+        btnEmpezar.setBackground(new java.awt.Color(255, 153, 102));
+        btnEmpezar.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        btnEmpezar.setText("Empezar");
+        btnEmpezar.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 204, 204)));
+        btnEmpezar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEmpezar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmpezarActionPerformed(evt);
+            }
+        });
+
+        txtaPesos.setBackground(new java.awt.Color(255, 153, 102));
+        txtaPesos.setColumns(20);
+        txtaPesos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        txtaPesos.setRows(5);
+        jScrollPane1.setViewportView(txtaPesos);
+
+        lblDescripcion1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblDescripcion1.setText("El Peso es de: ");
+
+        lblPesoTotal.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblPesoTotal.setForeground(new java.awt.Color(255, 51, 51));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblDescripcion2)
+                        .addGap(58, 58, 58)
+                        .addComponent(lblPesoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(109, 109, 109)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(65, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(358, 358, 358)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCarga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(23, 23, 23))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEmpezar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCalculando, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(220, 220, 220)
+                    .addComponent(lblDescripcion1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(453, Short.MAX_VALUE)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnEmpezar)
+                        .addGap(55, 55, 55)
+                        .addComponent(lblCarga)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblCalculando, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPesoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblDescripcion2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(450, Short.MAX_VALUE)
+                    .addComponent(lblDescripcion1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(257, 257, 257)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 528, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 430, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(8, 8, 8))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEmpezarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpezarActionPerformed
+     bandera=true;
+     MostrarLabels(true);
+     
+    }//GEN-LAST:event_btnEmpezarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,5 +297,15 @@ public class Pesaje extends javax.swing.JFrame implements Runnable{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEmpezar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCalculando;
+    private javax.swing.JLabel lblCarga;
+    private javax.swing.JLabel lblDescripcion1;
+    private javax.swing.JLabel lblDescripcion2;
+    public static javax.swing.JLabel lblPesoTotal;
+    private javax.swing.JTextArea txtaPesos;
     // End of variables declaration//GEN-END:variables
 }
